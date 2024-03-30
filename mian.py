@@ -1,20 +1,13 @@
 import cv2
 import numpy as np
+from functions import find_polygon_center
+
 
 # List to store points
 points = []
 poligon = []
 
 
-def find_polygon_center(points):
-    x_coords = [p[0] for p in points]
-    y_coords = [p[1] for p in points]
-    center_x = int(sum(x_coords) / len(points))
-    center_y = int(sum(y_coords) / len(points))
-    return (center_x, center_y)
-
-
-# Function to draw polygon
 def draw_polygon(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONUP:
         points.append((x, y))
@@ -31,14 +24,13 @@ while 1:
         break
     mask = np.zeros_like(frame)
     for cou, i in enumerate(poligon):
-        center_x, center_y = find_polygon_center(i)
         frame = cv2.putText(
             frame,
             f"s{cou}",
-            (center_x, center_y),
+            find_polygon_center(i),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.5,
-            (110, 201, 250),
+            (3, 186, 252),
             1,
             cv2.LINE_AA,
         )
@@ -47,7 +39,7 @@ while 1:
     frame = cv2.addWeighted(mask, 0.2, frame, 1, 0)
 
     for x, y in points:
-        cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)
+        cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
 
     cv2.imshow("image", frame)
 

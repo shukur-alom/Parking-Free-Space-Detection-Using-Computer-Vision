@@ -6,6 +6,14 @@ points = []
 poligon = []
 
 
+def find_polygon_center(points):
+    x_coords = [p[0] for p in points]
+    y_coords = [p[1] for p in points]
+    center_x = int(sum(x_coords) / len(points))
+    center_y = int(sum(y_coords) / len(points))
+    return (center_x, center_y)
+
+
 # Function to draw polygon
 def draw_polygon(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONUP:
@@ -22,8 +30,18 @@ while 1:
     if not ret:
         break
     mask = np.zeros_like(frame)
-    for i in poligon:
-        # Assuming 'frame' is your original image and 'i' is your polygon points
+    for cou, i in enumerate(poligon):
+        center_x, center_y = find_polygon_center(i)
+        frame = cv2.putText(
+            frame,
+            f"s{cou}",
+            (center_x, center_y),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (110, 201, 250),
+            1,
+            cv2.LINE_AA,
+        )
         cv2.fillPoly(mask, [np.array(i)], (124, 255, 112))
 
     frame = cv2.addWeighted(mask, 0.2, frame, 1, 0)

@@ -14,7 +14,7 @@ def draw_polygon(event, x, y, flags, param):
 
 
 # Create a black image, a window and bind the function to window
-cap = cv2.VideoCapture("Media/3214448-hd_1920_1080_25fps.mp4")
+cap = cv2.VideoCapture("Media/5587732-hd_1920_1080_30fps.mp4")
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", draw_polygon)
 

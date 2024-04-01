@@ -5,7 +5,6 @@ from functions import find_polygon_center, save_object, load_object
 
 # List to store points
 poligon = load_object()
-print(poligon)
 points = []
 
 
@@ -23,6 +22,7 @@ while 1:
     ret, frame = cap.read()
     if not ret:
         break
+    frame = cv2.resize(frame, (1280,720))
     mask = np.zeros_like(frame)
     for cou, i in enumerate(poligon):
         frame = cv2.putText(

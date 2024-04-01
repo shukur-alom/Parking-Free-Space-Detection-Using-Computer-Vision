@@ -22,5 +22,7 @@ def load_object():
         with open("object/poligon.obj", "rb") as f:
             return pickle.load(f)
     except:
-        with open("object/poligon.obj", "wb") as f:
-            pickle.dump([], f)
+        save_object([])
+
+        with open("object/poligon.obj", "rb") as f:
+            return pickle.load(f)

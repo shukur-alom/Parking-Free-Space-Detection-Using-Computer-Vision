@@ -1,11 +1,12 @@
 import cv2
 import numpy as np
-from functions import find_polygon_center
+from functions import find_polygon_center, save_object, load_object
 
 
 # List to store points
+poligon = load_object()
+print(poligon)
 points = []
-poligon = []
 
 
 def draw_polygon(event, x, y, flags, param):
@@ -49,10 +50,12 @@ while 1:
         if len(points) > 0:
             poligon.append(points)
             points = []
+            save_object(poligon)
 
     elif wail_key == ord("r"):
         try:
             poligon.pop()
+            save_object(poligon)
         except:
             pass
     elif wail_key & 0xFF == ord("q"):

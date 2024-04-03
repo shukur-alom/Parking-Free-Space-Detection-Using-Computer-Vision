@@ -2,7 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load a pretrained YOLOv8n model
-model = YOLO("Model/best.pt")
+model = YOLO("Models/Yolov8m  31mAp/weights/best.pt")
 
 label = {
     0: "pedestrian",
@@ -18,8 +18,8 @@ label = {
 }
 video_path = "Media/5587732-hd_1920_1080_30fps.mp4"
 
-fourcc = cv2.VideoWriter_fourcc(*"XVID")
-out = cv2.VideoWriter("Media/output.avi", fourcc, 20.0, (1920, 1080))
+#fourcc = cv2.VideoWriter_fourcc(*"XVID")
+#out = cv2.VideoWriter("Media/output.avi", fourcc, 20.0, (1920, 1080))
 
 
 video = cv2.VideoCapture(video_path)
@@ -31,7 +31,7 @@ while True:
     # If the frame was not successfully read, exit the loop
     if not ret:
         break
-    frame = cv2.resize(frame, (1920, 1080))
+    frame = cv2.resize(frame, (790, 666))
 
     results = model(frame, device=0)[0]
     print(results.boxes.xywh)
@@ -50,7 +50,7 @@ while True:
                 (102, 201, 237),
                 2,
             )
-    out.write(frame)
+    #out.write(frame)
     # Display the frame
     cv2.imshow("Video", frame)
 
@@ -60,5 +60,5 @@ while True:
 
 # Release the video file and close the window
 video.release()
-out.release()
+#out.release()
 cv2.destroyAllWindows()

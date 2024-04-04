@@ -68,7 +68,7 @@ def box_center(x1, y1, x2, y2):
     return (center_x, center_y)
 
 
-def label_name(n):
+def get_label_name(n):
     """Return the label names."""
     label = {
         0: "pedestrian",

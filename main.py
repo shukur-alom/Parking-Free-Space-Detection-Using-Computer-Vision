@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from functions import find_polygon_center, save_object, load_object, is_point_in_polygon, label_name
+from functions import find_polygon_center, save_object, load_object, is_point_in_polygon, get_label_name
 from ultralytics import YOLO
 
 
@@ -20,7 +20,7 @@ def draw_polygon(event, x, y, flags, param):
 
 # Create a black image, a window and bind the function to window
 cap = cv2.VideoCapture(
-    "Media/BLK-HDPTZ12_Security_Camera_Parkng_Lot_Surveillance_Video(1080p).mp4")
+    "Media/InShot_20240404_145221338.mp4")
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", draw_polygon)
 
@@ -40,19 +40,19 @@ while 1:
 
     for detection in results.boxes.data.tolist():
         x1, y1, x2, y2, score, class_id = detection
-        label_name = label_name[class_id]
+        label_name = get_label_name(class_id)
         if label_name == "bicycle" or label_name == "car" or label_name == "van" or label_name == "truck" or label_name == "tricycle" or label_name == "awning-tricycle" or label_name == "bus" or label_name == "motor":
 
             car_polygon = [(int(x1), int(y1)), (int(x1), int(
                 y2)), (int(x2), int(y2)), (int(x2), int(y1))]
 
-            cv2.rectangle(frame, (int(x1), int(y1)),
-                          (int(x2), int(y2)), (0, 255, 0), 1)
+            # cv2.rectangle(frame, (int(x1), int(y1)),
+            #              (int(x2), int(y2)), (0, 255, 0), 1)
 
-            frame = cv2.circle(frame, car_polygon[0], 1, (255, 255, 0), 3)
-            frame = cv2.circle(frame, car_polygon[1], 1, (0, 255, 255), 3)
-            frame = cv2.circle(frame, car_polygon[2], 1, (0, 0, 255), 3)
-            frame = cv2.circle(frame, car_polygon[3], 1, (255, 0, 0), 3)
+            # frame = cv2.circle(frame, car_polygon[0], 1, (255, 255, 0), 3)
+            # frame = cv2.circle(frame, car_polygon[1], 1, (0, 255, 255), 3)
+            # frame = cv2.circle(frame, car_polygon[2], 1, (0, 0, 255), 3)
+            # frame = cv2.circle(frame, car_polygon[3], 1, (255, 0, 0), 3)
 
             for cou, i in enumerate(polygon_data_copy):
                 poligon_center = find_polygon_center(i)
@@ -65,9 +65,26 @@ while 1:
                     cv2.fillPoly(mask_1, [np.array(i)], (0, 0, 255))
                     polygon_data_copy.remove(i)
 
+    cv2.putText(frame,
+                f'Total space : {len(polygon_data)}',
+                (50, 50),
+                cv2.FONT_HERSHEY_SIMPLEX, 1,
+                (0, 255, 255),
+                3,
+                cv2.LINE_4)
+
+    cv2.putText(frame,
+                f'Free space : {len(polygon_data_copy)}',
+                (50, 100),
+                cv2.FONT_HERSHEY_SIMPLEX, 1,
+                (0, 255, 255),
+                3,
+                cv2.LINE_4)
+
     for i in polygon_data_copy:
         cv2.fillPoly(mask_2, [np.array(i)], (0, 255, 255))
-        polygon_data_copy.remove(i)
+    # polygon_data_copy.remove(i)
+    print(len(polygon_data_copy))
 
     frame = cv2.addWeighted(mask_1, 0.2, frame, 1, 0)
     frame = cv2.addWeighted(mask_2, 0.2, frame, 1, 0)

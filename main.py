@@ -57,7 +57,7 @@ while 1:
             for cou, i in enumerate(polygon_data_copy):
                 poligon_center = find_polygon_center(i)
 
-                frame = cv2.circle(frame, poligon_center, 1, (255, 0, 255), 3)
+                #frame = cv2.circle(frame, poligon_center, 1, (255, 0, 255), 3) # cemter point of polygon
 
                 is_present = is_point_in_polygon(poligon_center, car_polygon)
 
@@ -69,15 +69,15 @@ while 1:
                 f'Total space : {len(polygon_data)}',
                 (50, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 1,
-                (0, 255, 255),
-                3,
+                (8, 210, 255),
+                2,
                 cv2.LINE_4)
 
     cv2.putText(frame,
                 f'Free space : {len(polygon_data_copy)}',
                 (50, 100),
                 cv2.FONT_HERSHEY_SIMPLEX, 1,
-                (0, 255, 255),
+                (8, 210, 90),
                 3,
                 cv2.LINE_4)
 

@@ -10,7 +10,7 @@ This project utilizes the custom object detection model to monitor parking space
 
 1. Install our module dependencies:
 
-```
+```pip
 pip install kawarizmi
 ``` 
 
@@ -18,7 +18,7 @@ pip install kawarizmi
 
 1. Run the Code.
 
-```
+```python
 import kawarizmi
 
 kawarizmi.parking_space_counter(video_path="your_video_path")

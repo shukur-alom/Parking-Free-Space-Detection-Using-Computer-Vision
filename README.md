@@ -2,6 +2,8 @@
 
 This project utilizes the custom object detection model to monitor parking spaces in a video feed. It identifies vehicles in the video and overlays polygons representing parking spaces on the frames. The program then calculates the number of occupied and free parking spaces based on the detected vehicles and the predefined parking space polygons.
 
+![System view](https://github.com/shukur-alom/parking-counter/blob/master/Media/system%20view.png)
+
 ## Requirements
 
 - Python 3.x
